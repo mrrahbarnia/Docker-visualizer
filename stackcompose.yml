@@ -1,0 +1,21 @@
+version: "3.9"
+
+services:
+  visualzierApp:
+    image: dockersamples/visualizer:stable
+    ports:
+      - "8087:8080"
+    networks:
+      - visualizer_net
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+      placement:
+        constraints: [node.role==manager]
+
+
+networks:
+  visualizer_net:
+    driver: overlay
+    name: VisualizerNetwork
